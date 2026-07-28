@@ -1,0 +1,2 @@
+# members 
+This section is reserved for the admin who will be able to add his team mates with maintanance role. with complete crud operations on all members profiles. The member profile contains email,fname and lname and profile picture. And these information will be used to power "meet the team " section on the web side. 
