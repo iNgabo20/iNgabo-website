@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { SITE_CONFIG, NAV_LINKS, COMPLIANCE_STANDARDS } from "../../lib/constants";
-import { Shield, Phone, Mail, MapPin, CheckCircle, ExternalLink } from "../ui/icons";
+import { Shield, CheckCircle } from "../ui/icons";
 import { Button } from "../ui/Button";
 
 export const Footer: React.FC = () => {

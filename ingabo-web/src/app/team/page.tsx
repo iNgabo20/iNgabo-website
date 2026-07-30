@@ -5,9 +5,7 @@ import { useQuery } from "@tanstack/react-query";
 import { memberService } from "../../services/member.service";
 import { PageHeader } from "../../components/layout/PageHeader";
 import { Card } from "../../components/ui/Card";
-import { Badge } from "../../components/ui/Badge";
 import { SectionHeader } from "../../components/ui/SectionHeader";
-import { UserCheck, Shield } from "../../components/ui/icons";
 
 export default function TeamPage() {
   const { data: members = [] } = useQuery({
@@ -36,19 +34,16 @@ export default function TeamPage() {
             {members.map((member) => (
               <Card key={member._id} className="flex flex-col sm:flex-row gap-6 hover:border-[#0F3D91]">
                 <div className="w-16 h-16 rounded-2xl bg-[#0F3D91]/10 text-[#0F3D91] flex items-center justify-center font-bold text-2xl shrink-0 border border-[#0F3D91]/20">
-                  {member.name.charAt(0)}
+                  {member.fullName.charAt(0)}
                 </div>
 
                 <div className="space-y-3 flex-1">
                   <div>
                     <h3 className="text-xl font-bold text-[#111827]">
-                      {member.name}
+                      {member.fullName}
                     </h3>
                     <p className="text-xs font-semibold text-[#00A86B]">
                       {member.role}
-                    </p>
-                    <p className="text-xs text-[#6B7280]">
-                      {member.institution}
                     </p>
                   </div>
 
@@ -56,11 +51,6 @@ export default function TeamPage() {
                     {member.bio}
                   </p>
 
-                  {member.isLeadership && (
-                    <Badge variant="primary" size="sm">
-                      Core Leadership
-                    </Badge>
-                  )}
                 </div>
               </Card>
             ))}

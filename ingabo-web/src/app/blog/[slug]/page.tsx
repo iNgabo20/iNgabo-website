@@ -6,10 +6,9 @@ import { useParams } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
 import { blogService } from "../../../services/blog.service";
 import { PageHeader } from "../../../components/layout/PageHeader";
-import { Card } from "../../../components/ui/Card";
 import { Badge } from "../../../components/ui/Badge";
 import { Button } from "../../../components/ui/Button";
-import { ArrowRight, MessageSquare, CheckCircle } from "../../../components/ui/icons";
+import { MessageSquare, CheckCircle } from "../../../components/ui/icons";
 import { formatDate } from "../../../lib/utils";
 
 export default function BlogDetailPage() {

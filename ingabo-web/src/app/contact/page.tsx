@@ -2,10 +2,11 @@
 
 import React, { useState } from "react";
 import { contactService } from "../../services/contact.service";
+import type { ContactMessageInput } from "../../types/contact";
 import { PageHeader } from "../../components/layout/PageHeader";
 import { Card } from "../../components/ui/Card";
 import { Button } from "../../components/ui/Button";
-import { Phone, Mail, MapPin, ShieldAlert, CheckCircle } from "../../components/ui/icons";
+import { Phone, Mail, MapPin, CheckCircle } from "../../components/ui/icons";
 
 export default function ContactPage() {
   const [loading, setLoading] = useState(false);
@@ -27,7 +28,7 @@ export default function ContactPage() {
       await contactService.submitMessage(formData);
       setSubmitted(true);
     } catch {
-      setSubmitted(true);
+      setSubmitted(false);
     } finally {
       setLoading(false);
     }
@@ -161,7 +162,7 @@ export default function ContactPage() {
                         </label>
                         <select
                           value={formData.category}
-                          onChange={(e) => setFormData({ ...formData, category: e.target.value as any })}
+                          onChange={(e) => setFormData({ ...formData, category: e.target.value as ContactMessageInput["category"] })}
                           className="w-full px-3.5 py-2.5 text-sm bg-[#F8FAFC] border border-[#E5E7EB] rounded-lg focus:outline-none focus:border-[#0F3D91]"
                         >
                           <option value="General Inquiry">General Inquiry</option>

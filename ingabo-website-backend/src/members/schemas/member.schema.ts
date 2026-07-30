@@ -1,1 +1,17 @@
-import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose'; import { HydratedDocument } from 'mongoose'; export type MemberDocument = HydratedDocument<Member>; @Schema({ timestamps: true, collection: 'members' }) export class Member { @Prop({ required: true, trim: true, maxlength: 160 }) fullName!: string; @Prop({ required: true, maxlength: 120 }) role!: string; @Prop({ maxlength: 1000 }) bio?: string; @Prop() avatar?: string; @Prop() linkedin?: string; @Prop() github?: string; @Prop({ required: true, lowercase: true, trim: true }) email!: string; @Prop({ default: 0, index: true }) displayOrder!: number; @Prop({ default: false }) isDeleted!: boolean; } export const MemberSchema = SchemaFactory.createForClass(Member);
+import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import { HydratedDocument } from 'mongoose';
+export type MemberDocument = HydratedDocument<Member>;
+@Schema({ timestamps: true, collection: 'members' })
+export class Member {
+  @Prop({ required: true, trim: true, maxlength: 160 }) fullName!: string;
+  @Prop({ required: true, maxlength: 120 }) role!: string;
+  @Prop({ maxlength: 1000 }) bio?: string;
+  @Prop() avatar?: string;
+  @Prop() linkedin?: string;
+  @Prop() github?: string;
+  @Prop({ required: true, lowercase: true, trim: true }) email!: string;
+  @Prop({ default: 0, index: true }) displayOrder!: number;
+  @Prop({ default: false }) isDeleted!: boolean;
+  @Prop() deletedAt?: Date;
+}
+export const MemberSchema = SchemaFactory.createForClass(Member);

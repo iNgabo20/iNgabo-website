@@ -230,3 +230,10 @@ export const DynamicIcon: React.FC<{ name: string; size?: number; className?: st
     default: return <Shield size={size} className={className} />;
   }
 };
+
+// Semantic aliases used by page composition. Keeping them in the shared icon
+// module avoids importing icons directly into presentation components.
+export const Building = Network;
+export const Award = Star;
+export const ExternalLink = ArrowRight;
+export const Layers = Network;

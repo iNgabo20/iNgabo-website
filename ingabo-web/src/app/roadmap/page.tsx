@@ -3,7 +3,7 @@ import { Metadata } from "next";
 import { PageHeader } from "../../components/layout/PageHeader";
 import { Card } from "../../components/ui/Card";
 import { Badge } from "../../components/ui/Badge";
-import { CheckCircle, Activity, Cpu, Layers } from "../../components/ui/icons";
+import { CheckCircle } from "../../components/ui/icons";
 
 export const metadata: Metadata = {
   title: "Platform Roadmap",

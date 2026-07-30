@@ -44,33 +44,19 @@ export default function FeaturesPage() {
                         {feat.title}
                       </h3>
                       <Badge variant="primary" size="sm">
-                        {feat.category}
+                        Platform capability
                       </Badge>
                     </div>
                   </div>
                 </div>
 
                 <p className="text-sm text-[#475569] leading-relaxed">
-                  {feat.fullDescription}
+                  {feat.description}
                 </p>
 
-                <div className="space-y-2 pt-4 border-t border-[#E5E7EB]">
-                  <h4 className="text-xs font-bold text-[#111827] uppercase tracking-wider">
-                    Core Technical Capabilities:
-                  </h4>
-                  <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs text-[#334155]">
-                    {feat.capabilities.map((cap, i) => (
-                      <li key={i} className="flex items-start gap-1.5">
-                        <CheckCircle size={14} className="text-[#00A86B] shrink-0 mt-0.5" />
-                        <span>{cap}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-
                 <div className="pt-4 border-t border-[#E5E7EB] flex items-center justify-between text-xs text-[#6B7280]">
-                  <span>Target Beneficiaries:</span>
-                  <span className="font-semibold text-[#0F3D91]">{feat.beneficiaries.join(", ")}</span>
+                  <span>Published capability</span>
+                  <CheckCircle size={16} className="text-[#00A86B]" aria-label="Active" />
                 </div>
               </Card>
             ))}

@@ -8,7 +8,7 @@ import { PageHeader } from "../../components/layout/PageHeader";
 import { Card } from "../../components/ui/Card";
 import { Badge } from "../../components/ui/Badge";
 import { Button } from "../../components/ui/Button";
-import { Search, ArrowRight, FileText } from "../../components/ui/icons";
+import { Search, ArrowRight } from "../../components/ui/icons";
 import { formatDate } from "../../lib/utils";
 
 export default function BlogListingPage() {

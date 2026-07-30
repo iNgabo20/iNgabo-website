@@ -41,7 +41,7 @@ export default function PartnersPage() {
                       <Building size={24} />
                     </div>
                     <Badge variant="primary" size="sm">
-                      {partner.type}
+                      Institutional partner
                     </Badge>
                   </div>
 
@@ -55,10 +55,10 @@ export default function PartnersPage() {
                   </div>
                 </div>
 
-                {partner.websiteUrl && (
+                {partner.website && (
                   <div className="pt-4 border-t border-[#E5E7EB]">
                     <a
-                      href={partner.websiteUrl}
+                      href={partner.website}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#0F3D91] hover:underline"

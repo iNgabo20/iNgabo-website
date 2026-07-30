@@ -30,11 +30,10 @@ export const NAV_LINKS = [
   { label: "Contact", href: "/contact" }
 ];
 
-export const PLATFORM_STATS = [
-  { id: "stats-1", label: "Real-time Telemetry Anomalies Checked", value: "50M+", change: "+14% monthly", icon: "Activity" },
-  { id: "stats-2", label: "Device Recovery Success Rate", value: "89.4%", change: "RIB Verified", icon: "ShieldCheck" },
-  { id: "stats-3", label: "SIM Swap & Smishing Threats Mitigated", value: "120,000+", change: "Zero Trust Defense", icon: "AlertTriangle" },
-  { id: "stats-4", label: "CAMARA Telecom Network Integrations", value: "6 Core APIs", change: "MTN & Airtel Rwanda", icon: "Cpu" }
+export const FAQ_ITEMS = [
+  { question: "What is iNgabo?", answer: "iNgabo is a national telecom fraud intelligence, citizen protection, and device recovery platform." },
+  { question: "How can I report a suspected fraud incident?", answer: "Use the contact and incident-reporting forms on this website. Submitted reports are sent to the iNgabo team for review." },
+  { question: "Does iNgabo replace law-enforcement review?", answer: "No. Automated analysis supports authorized investigators; enforcement decisions remain subject to applicable legal and regulatory controls." },
 ];
 
 export const OPERATIONAL_DOMAINS = [

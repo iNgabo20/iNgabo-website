@@ -55,7 +55,7 @@ export const RatingModal: React.FC = () => {
             Feedback Submitted!
           </h4>
           <p className="text-sm text-[#6B7280]">
-            Thank you for helping us strengthen Rwanda's National Digital Trust Platform.
+            Thank you for helping us strengthen Rwanda&apos;s National Digital Trust Platform.
           </p>
           <Button variant="primary" size="md" onClick={handleReset} className="mt-2">
             Done

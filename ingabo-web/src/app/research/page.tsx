@@ -5,7 +5,7 @@ import { SectionHeader } from "../../components/ui/SectionHeader";
 import { Card } from "../../components/ui/Card";
 import { Badge } from "../../components/ui/Badge";
 import { COMPLIANCE_STANDARDS } from "../../lib/constants";
-import { FileText, ShieldCheck, Scale, Cpu } from "../../components/ui/icons";
+import { FileText, ShieldCheck } from "../../components/ui/icons";
 
 export const metadata: Metadata = {
   title: "Research & International Standards",

@@ -1,26 +1,107 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger, NotFoundException } from '@nestjs/common';
+import { InjectModel } from '@nestjs/mongoose';
+import { Model } from 'mongoose';
+import { NotificationType } from '../common/constants';
+import { MailService } from '../mail/mail.service';
+import { NotificationsService } from '../notifications/notifications.service';
 import { CreateMessageDto } from './dto/create-message.dto';
 import { UpdateMessageDto } from './dto/update-message.dto';
+import { Message, MessageDocument } from './schemas/message.schema';
 
 @Injectable()
 export class MessagesService {
-  create(createMessageDto: CreateMessageDto) {
-    return 'This action adds a new message';
+  private readonly logger = new Logger(MessagesService.name);
+
+  constructor(
+    @InjectModel(Message.name)
+    private readonly messages: Model<MessageDocument>,
+    private readonly mail: MailService,
+    private readonly notifications: NotificationsService,
+  ) {}
+
+  async create(dto: CreateMessageDto) {
+    const message = await this.messages.create(dto);
+
+    // Side effects must not fail the public contact submission.
+    void this.dispatchContactSideEffects(dto).catch((error: unknown) => {
+      this.logger.error(
+        'Contact message side effects failed',
+        error instanceof Error ? error.stack : undefined,
+      );
+    });
+
+    return message;
   }
 
   findAll() {
-    return `This action returns all messages`;
+    return this.messages
+      .find({ isDeleted: false })
+      .sort({ createdAt: -1 })
+      .lean()
+      .exec();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} message`;
+  async findOne(id: string) {
+    const item = await this.messages
+      .findOne({ _id: id, isDeleted: false })
+      .lean()
+      .exec();
+    if (!item) throw new NotFoundException('Message not found');
+    return item;
   }
 
-  update(id: number, updateMessageDto: UpdateMessageDto) {
-    return `This action updates a #${id} message`;
+  async markRead(id: string) {
+    const item = await this.messages
+      .findOneAndUpdate(
+        { _id: id, isDeleted: false },
+        { isRead: true },
+        { new: true },
+      )
+      .lean()
+      .exec();
+    if (!item) throw new NotFoundException('Message not found');
+    return item;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} message`;
+  async update(id: string, dto: UpdateMessageDto) {
+    const item = await this.messages
+      .findOneAndUpdate({ _id: id, isDeleted: false }, dto, {
+        new: true,
+        runValidators: true,
+      })
+      .lean()
+      .exec();
+    if (!item) throw new NotFoundException('Message not found');
+    return item;
+  }
+
+  async remove(id: string) {
+    const result = await this.messages.updateOne(
+      { _id: id, isDeleted: false },
+      { isDeleted: true },
+    );
+    if (!result.modifiedCount) throw new NotFoundException('Message not found');
+    return { deleted: true };
+  }
+
+  /**
+   * Confirm to the visitor, alert the team inbox, and create a dashboard notification.
+   */
+  private async dispatchContactSideEffects(dto: CreateMessageDto): Promise<void> {
+    await Promise.all([
+      this.mail.sendContactConfirmation(dto.email, dto.name, dto.subject),
+      this.mail.sendContactTeamNotification({
+        name: dto.name,
+        email: dto.email,
+        phone: dto.phone,
+        subject: dto.subject,
+        message: dto.message,
+      }),
+      this.notifications.create({
+        title: `New contact message from ${dto.name}`,
+        message: `${dto.subject}: ${dto.message.slice(0, 240)}`,
+        type: NotificationType.MESSAGE,
+      }),
+    ]);
   }
 }

@@ -32,7 +32,7 @@ export const PartnersSection: React.FC = () => {
                   <Building size={20} />
                 </div>
                 <Badge variant="primary" size="sm">
-                  {partner.type}
+                  Institutional partner
                 </Badge>
               </div>
 

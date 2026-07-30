@@ -3,7 +3,7 @@ import { AI_CAPABILITIES } from "../../lib/constants";
 import { SectionHeader } from "../../components/ui/SectionHeader";
 import { Card } from "../../components/ui/Card";
 import { Badge } from "../../components/ui/Badge";
-import { Network, ShieldCheck, Scale } from "../../components/ui/icons";
+import { Network, Scale } from "../../components/ui/icons";
 
 export const AiEngineSection: React.FC = () => {
   return (
@@ -45,7 +45,7 @@ export const AiEngineSection: React.FC = () => {
                 Human-in-the-Loop (HITL) & SHAP Explainability Governance
               </h4>
               <p className="text-xs text-[#94A3B8] max-w-2xl">
-                No automatic line disconnection occurs without explainable SHAP reasoning audit logs and RIB law enforcement verification, upholding Rwanda's legal standards.
+                No automatic line disconnection occurs without explainable SHAP reasoning audit logs and RIB law enforcement verification, upholding Rwanda&apos;s legal standards.
               </p>
             </div>
           </div>
