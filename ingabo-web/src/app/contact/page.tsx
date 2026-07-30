@@ -22,14 +22,18 @@ export default function ContactPage() {
     message: "",
   });
 
+  const [errorMsg, setErrorMsg] = useState<string | null>(null);
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
+    setErrorMsg(null);
     try {
       await contactService.submitMessage(formData);
       setSubmitted(true);
-    } catch {
+    } catch (err: any) {
       setSubmitted(false);
+      setErrorMsg(err?.message || "Failed to submit message. Please verify fields and try again.");
     } finally {
       setLoading(false);
     }
@@ -114,6 +118,12 @@ export default function ContactPage() {
                 ) : (
                   <form onSubmit={handleSubmit} className="space-y-4">
                     <h3 className="text-xl font-bold text-[#111827] mb-2">Send an Inquiry or Incident Report</h3>
+
+                    {errorMsg && (
+                      <div className="p-3 bg-red-50 border border-red-200 text-red-700 text-xs rounded-lg">
+                        {errorMsg}
+                      </div>
+                    )}
 
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                       <div>

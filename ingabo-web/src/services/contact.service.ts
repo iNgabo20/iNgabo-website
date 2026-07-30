@@ -4,8 +4,23 @@ import { ApiResponse } from "../types/api";
 
 export const contactService = {
   async submitMessage(data: ContactMessageInput): Promise<ApiResponse<ContactMessage>> {
-    const message = { name: data.name, email: data.email, phone: data.phone, subject: data.subject, message: data.message };
-    const response = await apiClient.post<ApiResponse<ContactMessage>>("/messages", message);
+    const fullSubject = data.category && !data.subject.startsWith(`[${data.category}]`) 
+      ? `[${data.category}] ${data.subject}` 
+      : data.subject;
+
+    const payload = {
+      name: data.name.trim(),
+      email: data.email.trim(),
+      phone: data.phone?.trim() || undefined,
+      subject: fullSubject.trim(),
+      message: data.message.trim(),
+    };
+    const response = await apiClient.post<ApiResponse<ContactMessage>>("/messages", payload);
+    return response.data;
+  },
+
+  async subscribeNewsletter(email: string): Promise<ApiResponse<{ message: string }>> {
+    const response = await apiClient.post<ApiResponse<{ message: string }>>("/messages/subscribe", { email: email.trim() });
     return response.data;
   }
 };

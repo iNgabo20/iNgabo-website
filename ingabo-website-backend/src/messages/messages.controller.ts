@@ -13,12 +13,21 @@ import { Role } from '../common/constants';
 import { Roles } from '../common/decorators/roles.decorator';
 import { RolesGuard } from '../common/guards/roles.guard';
 import { CreateMessageDto } from './dto/create-message.dto';
+import { SubscribeDto } from './dto/subscribe.dto';
 import { UpdateMessageDto } from './dto/update-message.dto';
 import { MessagesService } from './messages.service';
+
 @Controller('messages')
 export class MessagesController {
   constructor(private readonly service: MessagesService) {}
-  @Post() create(@Body() dto: CreateMessageDto) {
+
+  @Post('subscribe')
+  subscribe(@Body() dto: SubscribeDto) {
+    return this.service.subscribe(dto.email);
+  }
+
+  @Post()
+  create(@Body() dto: CreateMessageDto) {
     return this.service.create(dto);
   }
   @Get()

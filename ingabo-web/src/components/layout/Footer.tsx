@@ -7,15 +7,27 @@ import { SITE_CONFIG, NAV_LINKS, COMPLIANCE_STANDARDS } from "../../lib/constant
 import { Shield, CheckCircle } from "../ui/icons";
 import { Button } from "../ui/Button";
 
+import { contactService } from "../../services/contact.service";
+
 export const Footer: React.FC = () => {
   const [subscribed, setSubscribed] = useState(false);
   const [emailInput, setEmailInput] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
-  const handleSubscribe = (e: React.FormEvent) => {
+  const handleSubscribe = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (emailInput) {
+    if (!emailInput.trim()) return;
+    setLoading(true);
+    setErrorMsg(null);
+    try {
+      await contactService.subscribeNewsletter(emailInput);
       setSubscribed(true);
       setEmailInput("");
+    } catch (err: any) {
+      setErrorMsg(err?.message || "Subscription failed. Please try again.");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -146,7 +158,10 @@ export const Footer: React.FC = () => {
                   onChange={(e) => setEmailInput(e.target.value)}
                   className="w-full px-3 py-2 text-xs bg-white/10 border border-white/20 rounded-lg text-white placeholder-white/50 focus:outline-none focus:border-[#2D9CDB]"
                 />
-                <Button variant="accent" size="sm" type="submit" className="w-full justify-center">
+                {errorMsg && (
+                  <p className="text-[11px] text-[#E63946] font-medium">{errorMsg}</p>
+                )}
+                <Button variant="accent" size="sm" type="submit" isLoading={loading} className="w-full justify-center">
                   Subscribe
                 </Button>
               </form>

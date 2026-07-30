@@ -33,6 +33,34 @@ export class MessagesService {
     return message;
   }
 
+  async subscribe(email: string) {
+    const formattedEmail = email.trim().toLowerCase();
+    const existing = await this.messages.findOne({
+      email: formattedEmail,
+      subject: 'Newsletter Subscription',
+      isDeleted: false,
+    });
+
+    if (!existing) {
+      await this.messages.create({
+        name: 'Newsletter Subscriber',
+        email: formattedEmail,
+        subject: 'Newsletter Subscription',
+        message: 'Subscribed to iNgabo threat security bulletins and advisories.',
+      });
+
+      void this.notifications
+        .create({
+          title: 'New Threat Bulletin Subscriber',
+          message: `Subscriber email: ${formattedEmail}`,
+          type: NotificationType.MESSAGE,
+        })
+        .catch(() => {});
+    }
+
+    return { message: 'Successfully subscribed to threat bulletins!' };
+  }
+
   findAll() {
     return this.messages
       .find({ isDeleted: false })
