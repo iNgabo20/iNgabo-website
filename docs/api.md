@@ -108,6 +108,90 @@ GET /auth/profile
 
 Authentication required.
 
+### Response
+
+```json
+{
+  "success": true,
+  "message": "Operation completed successfully.",
+  "data": {
+    "_id": "...",
+    "firstName": "Ada",
+    "lastName": "Admin",
+    "email": "admin@ingabo.org",
+    "role": "ADMINISTRATOR",
+    "isActive": true
+  }
+}
+```
+
+---
+
+## Forgot Password
+
+```http
+POST /auth/forgot-password
+```
+
+Sends a one-time password-reset code when the email belongs to an active team account. Always returns a generic success message to avoid email enumeration.
+
+### Request
+
+```json
+{
+  "email": "admin@ingabo.org"
+}
+```
+
+### Response
+
+```json
+{
+  "success": true,
+  "message": "Operation completed successfully.",
+  "data": {
+    "message": "If an account exists for that email, a password reset code has been sent."
+  }
+}
+```
+
+---
+
+## Reset Password
+
+```http
+POST /auth/reset-password
+```
+
+### Request
+
+```json
+{
+  "email": "admin@ingabo.org",
+  "otp": "483921",
+  "newPassword": "NewStrongP@ssw0rd"
+}
+```
+
+---
+
+## Change Password
+
+```http
+POST /auth/change-password
+```
+
+Authentication required. Requires the current password.
+
+### Request
+
+```json
+{
+  "currentPassword": "CurrentP@ssw0rd",
+  "newPassword": "NewStrongP@ssw0rd"
+}
+```
+
 ---
 
 ## Refresh Token *(Future)*

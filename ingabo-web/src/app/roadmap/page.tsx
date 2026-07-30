@@ -13,10 +13,10 @@ export const metadata: Metadata = {
 export default function RoadmapPage() {
   const phases = [
     {
-      phase: "Phase 1 — Core Foundation",
+      phase: "Phase 1 - Core Foundation",
       timeline: "Q1 - Q2 2026 (Completed)",
-      status: "Completed",
-      title: "Backend Microservices & MongoDB Base Architecture",
+      status: "In Progress",
+      title: "Backend Microservices & Postgresql",
       items: [
         "NestJS REST API & Centralized Exception Filter",
         "JWT + Passport RBAC Authentication & Role Management",
@@ -25,9 +25,9 @@ export default function RoadmapPage() {
       ]
     },
     {
-      phase: "Phase 2 — Telecom & CAMARA Integrations",
+      phase: "Phase 2 - Telecom & CAMARA Integrations",
       timeline: "Q3 2026 (Active Phase)",
-      status: "In Progress",
+      status: "Up Coming",
       title: "GSMA CAMARA Gateway & Telemetry Streaming",
       items: [
         "MTN & Airtel Rwanda CAMARA SIM Swap API integration",
@@ -37,7 +37,7 @@ export default function RoadmapPage() {
       ]
     },
     {
-      phase: "Phase 3 — Neo4j Graph AI & XAI Reasoning",
+      phase: "Phase 3 - Neo4j Graph AI & XAI Reasoning",
       timeline: "Q4 2026 (Planned)",
       status: "Upcoming",
       title: "Graph Neural Networks & Explainable Fraud Scoring",
@@ -49,7 +49,7 @@ export default function RoadmapPage() {
       ]
     },
     {
-      phase: "Phase 4 — National Scale & Multi-Operator Rollout",
+      phase: "Phase 4 - National Scale & Multi-Operator Rollout",
       timeline: "Q1 - Q2 2027 (Future)",
       status: "Planned",
       title: "Regional Threat Sharing & PWA Citizen App",

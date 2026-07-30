@@ -2,6 +2,7 @@ import { BadRequestException, Controller, Delete, Param, Post, UploadedFile, Use
 import { FileInterceptor } from '@nestjs/platform-express';
 import { AuthGuard } from '@nestjs/passport';
 import { diskStorage } from 'multer';
+import 'multer';
 import { extname, join } from 'node:path';
 import { randomUUID } from 'node:crypto';
 import { mkdirSync, unlink } from 'node:fs';

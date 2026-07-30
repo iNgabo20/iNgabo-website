@@ -12,11 +12,12 @@ export default function ContactPage() {
   const [loading, setLoading] = useState(false);
   const [submitted, setSubmitted] = useState(false);
 
-  const [formData, setFormData] = useState({
+  // 1. Explicitly type the state so 'category' accepts the full union type
+  const [formData, setFormData] = useState<ContactMessageInput>({
     name: "",
     email: "",
     phone: "",
-    category: "General Inquiry" as const,
+    category: "General Inquiry", 
     subject: "",
     message: "",
   });
@@ -165,10 +166,13 @@ export default function ContactPage() {
                           onChange={(e) => setFormData({ ...formData, category: e.target.value as ContactMessageInput["category"] })}
                           className="w-full px-3.5 py-2.5 text-sm bg-[#F8FAFC] border border-[#E5E7EB] rounded-lg focus:outline-none focus:border-[#0F3D91]"
                         >
+                          {/* 2. Updated value properties to exactly match the types from your ContactMessageInput union */}
                           <option value="General Inquiry">General Inquiry</option>
+                          <option value="General">General</option>
                           <option value="Report Fraud">Report Telecom Fraud Incident</option>
                           <option value="Partnership">Institutional Partnership</option>
-                          <option value="Technical Support">CAMARA API / Tech Support</option>
+                          <option value="RIB Investigation">RIB Investigation</option>
+                          <option value="Technical API Integration">CAMARA API / Tech Support</option>
                         </select>
                       </div>
                     </div>

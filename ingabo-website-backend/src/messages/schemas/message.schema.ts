@@ -10,5 +10,7 @@ export class Message {
   @Prop({ required: true, maxlength: 5000 }) message!: string;
   @Prop({ default: false, index: true }) isRead!: boolean;
   @Prop({ default: false }) isDeleted!: boolean;
+  createdAt?: Date;
+  updatedAt?: Date;
 }
 export const MessageSchema = SchemaFactory.createForClass(Message);

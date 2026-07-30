@@ -7,8 +7,8 @@ import { SITE_CONFIG } from "../lib/constants";
 
 export const metadata: Metadata = {
   title: {
-    default: "iNgabo — National Telecom Fraud Intelligence Platform",
-    template: "%s | iNgabo — Digital Shield of Rwanda",
+    default: "iNgabo - National Telecom Fraud Intelligence Platform",
+    template: "%s | iNgabo - Digital Shield of Rwanda",
   },
   description: SITE_CONFIG.description,
   keywords: [

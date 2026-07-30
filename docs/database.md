@@ -102,6 +102,11 @@ Stores administrator and maintainer accounts.
 | avatar | String | No |
 | isActive | Boolean | Yes |
 | lastLogin | Date | No |
+| passwordResetOtpHash | String | No |
+| passwordResetExpires | Date | No |
+| passwordResetAttempts | Number | No |
+| isDeleted | Boolean | Yes |
+| deletedAt | Date | No |
 | createdAt | Date | Yes |
 | updatedAt | Date | Yes |
 

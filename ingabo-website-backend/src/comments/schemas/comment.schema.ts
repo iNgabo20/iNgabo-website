@@ -11,6 +11,8 @@ export class Comment {
   @Prop({ required: true, maxlength: 2000 }) message!: string;
   @Prop({ default: false, index: true }) approved!: boolean;
   @Prop({ default: false }) isDeleted!: boolean;
+  createdAt?: Date;
+  updatedAt?: Date;
 }
 
 export const CommentSchema = SchemaFactory.createForClass(Comment);
