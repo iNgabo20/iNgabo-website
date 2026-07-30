@@ -1,3 +1,15 @@
-export enum Role { ADMINISTRATOR = 'ADMINISTRATOR', MAINTAINER = 'MAINTAINER' }
-export enum BlogStatus { DRAFT = 'DRAFT', PUBLISHED = 'PUBLISHED', ARCHIVED = 'ARCHIVED' }
-export enum NotificationType { MESSAGE = 'MESSAGE', COMMENT = 'COMMENT', RATING = 'RATING', SYSTEM = 'SYSTEM' }
+export enum Role {
+  ADMINISTRATOR = 'ADMINISTRATOR',
+  MAINTAINER = 'MAINTAINER',
+}
+export enum BlogStatus {
+  DRAFT = 'DRAFT',
+  PUBLISHED = 'PUBLISHED',
+  ARCHIVED = 'ARCHIVED',
+}
+export enum NotificationType {
+  MESSAGE = 'MESSAGE',
+  COMMENT = 'COMMENT',
+  RATING = 'RATING',
+  SYSTEM = 'SYSTEM',
+}

@@ -1,1 +1,50 @@
-import { Injectable, NotFoundException } from '@nestjs/common'; import { InjectModel } from '@nestjs/mongoose'; import { Model } from 'mongoose'; import { CreateFeatureDto } from './dto/create-feature.dto'; import { UpdateFeatureDto } from './dto/update-feature.dto'; import { Feature, FeatureDocument } from './schemas/feature.schema'; @Injectable() export class FeaturesService { constructor(@InjectModel(Feature.name) private readonly features: Model<FeatureDocument>) { } create(dto: CreateFeatureDto) { return this.features.create(dto); } findAll() { return this.features.find({ isDeleted: false }).sort({ displayOrder: 1 }).lean().exec(); } async findOne(id: string) { const item = await this.features.findOne({ _id: id, isDeleted: false }).lean().exec(); if (!item) throw new NotFoundException('Feature not found'); return item; } async update(id: string, dto: UpdateFeatureDto) { const item = await this.features.findOneAndUpdate({ _id: id, isDeleted: false }, dto, { new: true, runValidators: true }).lean().exec(); if (!item) throw new NotFoundException('Feature not found'); return item; } async remove(id: string) { const result = await this.features.updateOne({ _id: id, isDeleted: false }, { isDeleted: true }); if (!result.modifiedCount) throw new NotFoundException('Feature not found'); return { deleted: true }; } }
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { InjectModel } from '@nestjs/mongoose';
+import { Model } from 'mongoose';
+import { CreateFeatureDto } from './dto/create-feature.dto';
+import { UpdateFeatureDto } from './dto/update-feature.dto';
+import { Feature, FeatureDocument } from './schemas/feature.schema';
+@Injectable()
+export class FeaturesService {
+  constructor(
+    @InjectModel(Feature.name)
+    private readonly features: Model<FeatureDocument>,
+  ) {}
+  create(dto: CreateFeatureDto) {
+    return this.features.create(dto);
+  }
+  findAll() {
+    return this.features
+      .find({ isDeleted: false })
+      .sort({ displayOrder: 1 })
+      .lean()
+      .exec();
+  }
+  async findOne(id: string) {
+    const item = await this.features
+      .findOne({ _id: id, isDeleted: false })
+      .lean()
+      .exec();
+    if (!item) throw new NotFoundException('Feature not found');
+    return item;
+  }
+  async update(id: string, dto: UpdateFeatureDto) {
+    const item = await this.features
+      .findOneAndUpdate({ _id: id, isDeleted: false }, dto, {
+        new: true,
+        runValidators: true,
+      })
+      .lean()
+      .exec();
+    if (!item) throw new NotFoundException('Feature not found');
+    return item;
+  }
+  async remove(id: string) {
+    const result = await this.features.updateOne(
+      { _id: id, isDeleted: false },
+      { isDeleted: true },
+    );
+    if (!result.modifiedCount) throw new NotFoundException('Feature not found');
+    return { deleted: true };
+  }
+}

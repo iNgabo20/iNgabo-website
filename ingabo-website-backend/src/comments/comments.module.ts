@@ -5,7 +5,9 @@ import { CommentsService } from './comments.service';
 import { Comment, CommentSchema } from './schemas/comment.schema';
 
 @Module({
-  imports: [MongooseModule.forFeature([{ name: Comment.name, schema: CommentSchema }])],
+  imports: [
+    MongooseModule.forFeature([{ name: Comment.name, schema: CommentSchema }]),
+  ],
   controllers: [CommentsController],
   providers: [CommentsService],
 })

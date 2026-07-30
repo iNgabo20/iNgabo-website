@@ -1,2 +1,27 @@
-import { Module } from '@nestjs/common'; import { MongooseModule } from '@nestjs/mongoose'; import { DashboardController } from './dashboard.controller'; import { DashboardService } from './dashboard.service'; import { Blog, BlogSchema } from '../blog/schemas/blog.schema'; import { Member, MemberSchema } from '../members/schemas/member.schema'; import { Partner, PartnerSchema } from '../partners/schemas/partner.schema'; import { Feature, FeatureSchema } from '../features/schemas/feature.schema'; import { Message, MessageSchema } from '../messages/schemas/message.schema'; import { Comment, CommentSchema } from '../comments/schemas/comment.schema'; import { Rating, RatingSchema } from '../ratings/schemas/rating.schema';
-@Module({ imports: [MongooseModule.forFeature([{ name: Blog.name, schema: BlogSchema }, { name: Member.name, schema: MemberSchema }, { name: Partner.name, schema: PartnerSchema }, { name: Feature.name, schema: FeatureSchema }, { name: Message.name, schema: MessageSchema }, { name: Comment.name, schema: CommentSchema }, { name: Rating.name, schema: RatingSchema }])], controllers: [DashboardController], providers: [DashboardService] }) export class DashboardModule {}
+import { Module } from '@nestjs/common';
+import { MongooseModule } from '@nestjs/mongoose';
+import { DashboardController } from './dashboard.controller';
+import { DashboardService } from './dashboard.service';
+import { Blog, BlogSchema } from '../blog/schemas/blog.schema';
+import { Member, MemberSchema } from '../members/schemas/member.schema';
+import { Partner, PartnerSchema } from '../partners/schemas/partner.schema';
+import { Feature, FeatureSchema } from '../features/schemas/feature.schema';
+import { Message, MessageSchema } from '../messages/schemas/message.schema';
+import { Comment, CommentSchema } from '../comments/schemas/comment.schema';
+import { Rating, RatingSchema } from '../ratings/schemas/rating.schema';
+@Module({
+  imports: [
+    MongooseModule.forFeature([
+      { name: Blog.name, schema: BlogSchema },
+      { name: Member.name, schema: MemberSchema },
+      { name: Partner.name, schema: PartnerSchema },
+      { name: Feature.name, schema: FeatureSchema },
+      { name: Message.name, schema: MessageSchema },
+      { name: Comment.name, schema: CommentSchema },
+      { name: Rating.name, schema: RatingSchema },
+    ]),
+  ],
+  controllers: [DashboardController],
+  providers: [DashboardService],
+})
+export class DashboardModule {}

@@ -1,1 +1,13 @@
-import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose'; import { HydratedDocument } from 'mongoose'; export type FeatureDocument = HydratedDocument<Feature>; @Schema({ timestamps: true, collection: 'features' }) export class Feature { @Prop({ required: true, trim: true, maxlength: 120 }) title!: string; @Prop({ required: true, maxlength: 1000 }) description!: string; @Prop() icon?: string; @Prop() image?: string; @Prop({ default: 0, index: true }) displayOrder!: number; @Prop({ default: false }) isDeleted!: boolean; } export const FeatureSchema = SchemaFactory.createForClass(Feature);
+import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import { HydratedDocument } from 'mongoose';
+export type FeatureDocument = HydratedDocument<Feature>;
+@Schema({ timestamps: true, collection: 'features' })
+export class Feature {
+  @Prop({ required: true, trim: true, maxlength: 120 }) title!: string;
+  @Prop({ required: true, maxlength: 1000 }) description!: string;
+  @Prop() icon?: string;
+  @Prop() image?: string;
+  @Prop({ default: 0, index: true }) displayOrder!: number;
+  @Prop({ default: false }) isDeleted!: boolean;
+}
+export const FeatureSchema = SchemaFactory.createForClass(Feature);

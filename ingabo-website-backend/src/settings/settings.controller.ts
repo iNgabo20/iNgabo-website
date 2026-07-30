@@ -1,2 +1,20 @@
-import { Body, Controller, Get, Patch, UseGuards } from '@nestjs/common'; import { AuthGuard } from '@nestjs/passport'; import { Role } from '../common/constants'; import { Roles } from '../common/decorators/roles.decorator'; import { RolesGuard } from '../common/guards/roles.guard'; import { UpdateSettingsDto } from './dto/update-settings.dto'; import { SettingsService } from './settings.service';
-@Controller('settings') export class SettingsController { constructor(private readonly service: SettingsService) {} @Get() find() { return this.service.find(); } @Patch() @UseGuards(AuthGuard('jwt'), RolesGuard) @Roles(Role.ADMINISTRATOR) update(@Body() dto: UpdateSettingsDto) { return this.service.update(dto); } }
+import { Body, Controller, Get, Patch, UseGuards } from '@nestjs/common';
+import { AuthGuard } from '@nestjs/passport';
+import { Role } from '../common/constants';
+import { Roles } from '../common/decorators/roles.decorator';
+import { RolesGuard } from '../common/guards/roles.guard';
+import { UpdateSettingsDto } from './dto/update-settings.dto';
+import { SettingsService } from './settings.service';
+@Controller('settings')
+export class SettingsController {
+  constructor(private readonly service: SettingsService) {}
+  @Get() find() {
+    return this.service.find();
+  }
+  @Patch()
+  @UseGuards(AuthGuard('jwt'), RolesGuard)
+  @Roles(Role.ADMINISTRATOR)
+  update(@Body() dto: UpdateSettingsDto) {
+    return this.service.update(dto);
+  }
+}

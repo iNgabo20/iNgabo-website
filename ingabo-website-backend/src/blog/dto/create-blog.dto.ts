@@ -1,4 +1,12 @@
-import { IsArray, IsEnum, IsOptional, IsString, IsUrl, MaxLength, MinLength } from 'class-validator';
+import {
+  IsArray,
+  IsEnum,
+  IsOptional,
+  IsString,
+  IsUrl,
+  MaxLength,
+  MinLength,
+} from 'class-validator';
 import { BlogStatus } from '../../common/constants';
 export class CreateBlogDto {
   @IsString() @MinLength(3) @MaxLength(180) title!: string;

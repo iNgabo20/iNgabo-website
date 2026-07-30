@@ -1,1 +1,10 @@
-import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose'; import { HydratedDocument } from 'mongoose'; export type RatingDocument = HydratedDocument<Rating>; @Schema({ timestamps: true, collection: 'ratings' }) export class Rating { @Prop({ maxlength: 100 }) name?: string; @Prop({ required: true, min: 1, max: 5, index: true }) rating!: number; @Prop({ maxlength: 1000 }) comment?: string; } export const RatingSchema = SchemaFactory.createForClass(Rating);
+import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import { HydratedDocument } from 'mongoose';
+export type RatingDocument = HydratedDocument<Rating>;
+@Schema({ timestamps: true, collection: 'ratings' })
+export class Rating {
+  @Prop({ maxlength: 100 }) name?: string;
+  @Prop({ required: true, min: 1, max: 5, index: true }) rating!: number;
+  @Prop({ maxlength: 1000 }) comment?: string;
+}
+export const RatingSchema = SchemaFactory.createForClass(Rating);

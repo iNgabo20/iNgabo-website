@@ -1,14 +1,114 @@
-import { ConflictException, Injectable, NotFoundException } from '@nestjs/common';
-import { InjectModel } from '@nestjs/mongoose'; import { Model } from 'mongoose';
-import { BlogStatus } from '../common/constants'; import { BlogQueryDto } from './dto/blog-query.dto'; import { CreateBlogDto } from './dto/create-blog.dto'; import { UpdateBlogDto } from './dto/update-blog.dto'; import { Blog, BlogDocument } from './schemas/blog.schema';
+import {
+  ConflictException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
+import { InjectModel } from '@nestjs/mongoose';
+import { Model } from 'mongoose';
+import { BlogStatus } from '../common/constants';
+import { BlogQueryDto } from './dto/blog-query.dto';
+import { CreateBlogDto } from './dto/create-blog.dto';
+import { UpdateBlogDto } from './dto/update-blog.dto';
+import { Blog, BlogDocument } from './schemas/blog.schema';
 @Injectable()
 export class BlogService {
-  constructor(@InjectModel(Blog.name) private readonly blogs: Model<BlogDocument>) { }
-  async create(dto: CreateBlogDto, authorId: string) { const slug = this.slugify(dto.title); if (await this.blogs.exists({ slug })) throw new ConflictException('A blog with this title already exists'); return this.blogs.create({ ...dto, slug, author: authorId, status: BlogStatus.DRAFT }); }
-  async findAll(query: BlogQueryDto, includeDrafts = false) { const filter: Record<string, unknown> = { isDeleted: false }; if (!includeDrafts) filter.status = BlogStatus.PUBLISHED; if (query.status && includeDrafts) filter.status = query.status; if (query.tag) filter.tags = query.tag; if (query.search) filter.$text = { $search: query.search }; const skip = (query.page - 1) * query.limit; const [items, total] = await Promise.all([this.blogs.find(filter).sort({ publishedAt: -1, createdAt: -1 }).skip(skip).limit(query.limit).populate('author', 'firstName lastName').lean().exec(), this.blogs.countDocuments(filter)]); return { items, page: query.page, limit: query.limit, total, totalPages: Math.ceil(total / query.limit) }; }
-  async findBySlug(slug: string, includeDrafts = false) { const filter = { slug, isDeleted: false, ...(includeDrafts ? {} : { status: BlogStatus.PUBLISHED }) }; const blog = await this.blogs.findOne(filter).populate('author', 'firstName lastName').lean().exec(); if (!blog) throw new NotFoundException('Blog not found'); return blog; }
-  async update(id: string, dto: UpdateBlogDto) { const data = { ...dto, ...(dto.title ? { slug: this.slugify(dto.title) } : {}) }; const blog = await this.blogs.findOneAndUpdate({ _id: id, isDeleted: false }, data, { new: true, runValidators: true }).lean().exec(); if (!blog) throw new NotFoundException('Blog not found'); return blog; }
-  async setStatus(id: string, status: BlogStatus) { const blog = await this.blogs.findOneAndUpdate({ _id: id, isDeleted: false }, { status, publishedAt: status === BlogStatus.PUBLISHED ? new Date() : undefined }, { new: true }).lean().exec(); if (!blog) throw new NotFoundException('Blog not found'); return blog; }
-  async remove(id: string) { const result = await this.blogs.updateOne({ _id: id, isDeleted: false }, { isDeleted: true, deletedAt: new Date() }); if (!result.modifiedCount) throw new NotFoundException('Blog not found'); return { deleted: true }; }
-  private slugify(title: string) { return title.trim().toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, ''); }
+  constructor(
+    @InjectModel(Blog.name) private readonly blogs: Model<BlogDocument>,
+  ) {}
+  async create(dto: CreateBlogDto, authorId: string) {
+    const slug = this.slugify(dto.title);
+    if (await this.blogs.exists({ slug }))
+      throw new ConflictException('A blog with this title already exists');
+    return this.blogs.create({
+      ...dto,
+      slug,
+      author: authorId,
+      status: BlogStatus.DRAFT,
+    });
+  }
+  async findAll(query: BlogQueryDto, includeDrafts = false) {
+    const filter: Record<string, unknown> = { isDeleted: false };
+    if (!includeDrafts) filter.status = BlogStatus.PUBLISHED;
+    if (query.status && includeDrafts) filter.status = query.status;
+    if (query.tag) filter.tags = query.tag;
+    if (query.search) filter.$text = { $search: query.search };
+    const skip = (query.page - 1) * query.limit;
+    const [items, total] = await Promise.all([
+      this.blogs
+        .find(filter)
+        .sort({ publishedAt: -1, createdAt: -1 })
+        .skip(skip)
+        .limit(query.limit)
+        .populate('author', 'firstName lastName')
+        .lean()
+        .exec(),
+      this.blogs.countDocuments(filter),
+    ]);
+    return {
+      items,
+      page: query.page,
+      limit: query.limit,
+      total,
+      totalPages: Math.ceil(total / query.limit),
+    };
+  }
+  async findBySlug(slug: string, includeDrafts = false) {
+    const filter = {
+      slug,
+      isDeleted: false,
+      ...(includeDrafts ? {} : { status: BlogStatus.PUBLISHED }),
+    };
+    const blog = await this.blogs
+      .findOne(filter)
+      .populate('author', 'firstName lastName')
+      .lean()
+      .exec();
+    if (!blog) throw new NotFoundException('Blog not found');
+    return blog;
+  }
+  async update(id: string, dto: UpdateBlogDto) {
+    const data = {
+      ...dto,
+      ...(dto.title ? { slug: this.slugify(dto.title) } : {}),
+    };
+    const blog = await this.blogs
+      .findOneAndUpdate({ _id: id, isDeleted: false }, data, {
+        new: true,
+        runValidators: true,
+      })
+      .lean()
+      .exec();
+    if (!blog) throw new NotFoundException('Blog not found');
+    return blog;
+  }
+  async setStatus(id: string, status: BlogStatus) {
+    const blog = await this.blogs
+      .findOneAndUpdate(
+        { _id: id, isDeleted: false },
+        {
+          status,
+          publishedAt: status === BlogStatus.PUBLISHED ? new Date() : undefined,
+        },
+        { new: true },
+      )
+      .lean()
+      .exec();
+    if (!blog) throw new NotFoundException('Blog not found');
+    return blog;
+  }
+  async remove(id: string) {
+    const result = await this.blogs.updateOne(
+      { _id: id, isDeleted: false },
+      { isDeleted: true, deletedAt: new Date() },
+    );
+    if (!result.modifiedCount) throw new NotFoundException('Blog not found');
+    return { deleted: true };
+  }
+  private slugify(title: string) {
+    return title
+      .trim()
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, '-')
+      .replace(/(^-|-$)/g, '');
+  }
 }

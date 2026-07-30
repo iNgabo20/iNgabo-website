@@ -119,10 +119,7 @@ export class MailService {
       return Promise.resolve(false);
     }
 
-    const template = contactTeamNotificationTemplate(
-      payload,
-      this.frontendUrl,
-    );
+    const template = contactTeamNotificationTemplate(payload, this.frontendUrl);
     return this.send({
       to: this.adminInbox,
       replyTo: payload.email,
@@ -138,11 +135,7 @@ export class MailService {
     firstName: string,
     role = 'team member',
   ): Promise<boolean> {
-    const template = welcomeEmailTemplate(
-      firstName,
-      role,
-      this.frontendUrl,
-    );
+    const template = welcomeEmailTemplate(firstName, role, this.frontendUrl);
     return this.send({ to, ...template });
   }
 

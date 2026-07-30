@@ -1,1 +1,8 @@
-import { IsInt, IsOptional, IsString, MaxLength, Min } from 'class-validator'; export class CreateFeatureDto { @IsString() @MaxLength(120) title!: string; @IsString() @MaxLength(1000) description!: string; @IsOptional() @IsString() icon?: string; @IsOptional() @IsString() image?: string; @IsOptional() @IsInt() @Min(0) displayOrder?: number; }
+import { IsInt, IsOptional, IsString, MaxLength, Min } from 'class-validator';
+export class CreateFeatureDto {
+  @IsString() @MaxLength(120) title!: string;
+  @IsString() @MaxLength(1000) description!: string;
+  @IsOptional() @IsString() icon?: string;
+  @IsOptional() @IsString() image?: string;
+  @IsOptional() @IsInt() @Min(0) displayOrder?: number;
+}

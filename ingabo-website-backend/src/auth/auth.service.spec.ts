@@ -1,7 +1,4 @@
-import {
-  BadRequestException,
-  UnauthorizedException,
-} from '@nestjs/common';
+import { BadRequestException, UnauthorizedException } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 import { Test, TestingModule } from '@nestjs/testing';
@@ -313,7 +310,10 @@ describe('AuthService', () => {
 
   describe('profile', () => {
     it('delegates to UsersService.findOne', async () => {
-      users.findOne.mockResolvedValue({ id: 'user-1', email: 'admin@ingabo.org' });
+      users.findOne.mockResolvedValue({
+        id: 'user-1',
+        email: 'admin@ingabo.org',
+      });
 
       await expect(
         service.profile({

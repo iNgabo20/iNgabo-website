@@ -87,7 +87,9 @@ export class MessagesService {
   /**
    * Confirm to the visitor, alert the team inbox, and create a dashboard notification.
    */
-  private async dispatchContactSideEffects(dto: CreateMessageDto): Promise<void> {
+  private async dispatchContactSideEffects(
+    dto: CreateMessageDto,
+  ): Promise<void> {
     await Promise.all([
       this.mail.sendContactConfirmation(dto.email, dto.name, dto.subject),
       this.mail.sendContactTeamNotification({

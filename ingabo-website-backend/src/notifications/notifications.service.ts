@@ -28,7 +28,10 @@ export class NotificationsService {
   ) {
     const notification = await this.notifications.create(dto);
 
-    if (emailRecipients && (Array.isArray(emailRecipients) ? emailRecipients.length > 0 : true)) {
+    if (
+      emailRecipients &&
+      (Array.isArray(emailRecipients) ? emailRecipients.length > 0 : true)
+    ) {
       void this.mail
         .sendNotificationEmail(emailRecipients, dto.title, dto.message)
         .catch((error: unknown) => {

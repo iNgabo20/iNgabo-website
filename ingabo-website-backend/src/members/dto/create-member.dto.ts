@@ -1,4 +1,13 @@
-import { IsEmail, IsInt, IsOptional, IsString, IsUrl, Max, MaxLength, Min } from 'class-validator';
+import {
+  IsEmail,
+  IsInt,
+  IsOptional,
+  IsString,
+  IsUrl,
+  Max,
+  MaxLength,
+  Min,
+} from 'class-validator';
 export class CreateMemberDto {
   @IsString() @MaxLength(160) fullName!: string;
   @IsString() @MaxLength(120) role!: string;
