@@ -3,8 +3,8 @@ export const SITE_CONFIG = {
   fullName: "iNgabo - National Telecom Fraud Intelligence Platform",
   tagline: "Digital Shield of Rwanda",
   description: "National digital infrastructure platform built to detect, prevent, analyze, and recover telecommunications fraud through advanced AI, CAMARA open APIs, and real-time intelligence.",
-  url: process.env.NEXT_PUBLIC_SITE_URL || "https://ingabo.org",
-  apiUrl: process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000/api/v1",
+  url: process.env.NEXT_PUBLIC_SITE_URL,
+  apiUrl: process.env.NEXT_PUBLIC_API_URL,
   emergencyContact: "RIB Cybercrime Division: 112 | cybercrime@rib.gov.rw",
   rwandaGovPartners: [
     "Rwanda Investigation Bureau (RIB)",
